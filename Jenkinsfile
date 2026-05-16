@@ -4,15 +4,7 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-
-            steps {
-
-                git 'https://github.com/kuldeep265/devops.git'
-
-            }
-
-        }
+      
 
 
 
