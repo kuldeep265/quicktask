@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
- API_BASE_URLconst = process.env.REACT_APP_API_URL || "http://localhost:5002";
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5002";
 
 function App() {
 
