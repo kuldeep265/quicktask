@@ -13,7 +13,7 @@ quicktask/
 │   │   ├── App.js
 │   │   ├── App.css
 │   │   └── ...
-│   └── package.json
+│   └── package.jsonn
 │
 ├── backend/
 │   ├── models/
