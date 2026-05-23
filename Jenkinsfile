@@ -83,7 +83,9 @@ pipeline {
         stage('Deploy Application') {
 
             steps {
-
+                  bat 'docker rm -f backend || exit 0'
+                 bat 'docker rm -f frontend || exit 0'
+                 bat 'docker rm -f mongodb || exit 0'
                 bat 'docker compose down'
 
                 bat 'docker compose up -d'
