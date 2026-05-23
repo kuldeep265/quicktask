@@ -3,22 +3,31 @@ version: '3'
 services:
 
   frontend:
-    build: ./frontend
+    image: kuldeep7860/quicktask-frontend:latest
+
+    container_name: frontend
+
     ports:
-      - "3000:3000"
+      - "3001:3000"
+
     depends_on:
       - backend
 
   backend:
-    build: ./backend
+    image: kuldeep7860/quicktask-backend:latest
+
+    container_name: backend
+
     ports:
       - "5000:5000"
+
     depends_on:
       - mongodb
-    environment:
-      - MONGODB_URI=mongodb://mongodb:27017/quicktask
 
   mongodb:
     image: mongo:latest
+
+    container_name: mongodb
+
     ports:
       - "27017:27017"
