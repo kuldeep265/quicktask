@@ -24,7 +24,7 @@ quicktask/
 │   └── package.json
 │
 ├── docker-compose.yml
-├── Jenkinsfile
+├── Jenkinsfiles
 └── README.md
 ```
 
