@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./App.css";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5002";
 
@@ -68,53 +69,69 @@ function App() {
 
 
 
+  const pendingCount = tasks.filter((t) => !t.completed).length;
+
   return (
 
-    <div style={{ padding: "30px" }}>
+    <div className="App">
+      <div className="container">
+        <header className="app-header">
+          <h1>QuickTask</h1>
+          <p className="app-subtitle">Stay organized, one task at a time</p>
+        </header>
 
-      <h1>QuickTask</h1>
+        <div className="input-section">
+          <input
+            type="text"
+            placeholder="What do you need to do?"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            aria-label="New task title"
+          />
+          <button type="button" onClick={addTask} className="btn-add">
+            Add
+          </button>
+        </div>
 
-      <input
-        type="text"
-        placeholder="Enter Task"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
+        {tasks.length > 0 && (
+          <p className="task-summary">
+            {pendingCount === 0
+              ? "All caught up!"
+              : `${pendingCount} pending ${pendingCount === 1 ? "task" : "tasks"}`}
+          </p>
+        )}
 
-      <button onClick={addTask}>
-        Add
-      </button>
+        <ul className="task-list">
+          {tasks.map((task) => (
+            <li
+              key={task._id}
+              className={task.completed ? "completed" : ""}
+            >
+              <span>{task.title}</span>
+              <div className="task-actions">
+                <button
+                  type="button"
+                  className={`btn-status ${task.completed ? "is-done" : "is-pending"}`}
+                  onClick={() => completeTask(task._id, task.completed)}
+                >
+                  {task.completed ? "Completed" : "Pending"}
+                </button>
+                <button
+                  type="button"
+                  className="btn-delete"
+                  onClick={() => deleteTask(task._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
 
-
-
-      <ul>
-
-        {tasks.map((task) => (
-
-          <li key={task._id}>
-
-            {task.title}
-
-            {"  "}
-
-            <button onClick={() => completeTask(task._id, task.completed)}>
-
-              {task.completed ? "Completed" : "Pending"}
-
-            </button>
-
-            {"  "}
-
-            <button onClick={() => deleteTask(task._id)}>
-              Delete
-            </button>
-
-          </li>
-
-        ))}
-
-      </ul>
-
+        {tasks.length === 0 && (
+          <p className="empty-state">No tasks yet. Add one above to get started.</p>
+        )}
+      </div>
     </div>
 
   );
