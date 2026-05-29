@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../api";
+import AuthBrandPanel from "../components/AuthBrandPanel";
 import { useAuth } from "../context/AuthContext";
 import "../Auth.css";
 
@@ -30,61 +31,73 @@ function Signup() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <header className="auth-header">
-          <h1>Create account</h1>
-          <p>Join QuickTask and stay organized</p>
-        </header>
+    <div className="auth-shell">
+      <AuthBrandPanel
+        title="Start fresh today"
+        subtitle="Create your account and split work into clear pending and done views."
+      />
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {error && <p className="auth-error" role="alert">{error}</p>}
+      <div className="auth-panel">
+        <div className="auth-panel-inner">
+          <header className="auth-panel-header">
+            <p className="auth-eyebrow">Get started</p>
+            <h1>Create your account</h1>
+            <p>It only takes a moment to set up your personal task space.</p>
+          </header>
 
-          <label>
-            Name
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              required
-              autoComplete="name"
-            />
-          </label>
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {error && (
+              <p className="auth-error" role="alert">
+                {error}
+              </p>
+            )}
 
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              autoComplete="email"
-            />
-          </label>
+            <label>
+              Full name
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name"
+                required
+                autoComplete="name"
+              />
+            </label>
 
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 6 characters"
-              required
-              minLength={6}
-              autoComplete="new-password"
-            />
-          </label>
+            <label>
+              Email address
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
+            </label>
 
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? "Creating account..." : "Sign up"}
-          </button>
-        </form>
+            <label>
+              Password
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                required
+                minLength={6}
+                autoComplete="new-password"
+              />
+            </label>
 
-        <p className="auth-switch">
-          Already have an account? <Link to="/login">Sign in</Link>
-        </p>
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? "Creating account..." : "Create account"}
+            </button>
+          </form>
+
+          <p className="auth-switch">
+            Already registered? <Link to="/login">Sign in</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

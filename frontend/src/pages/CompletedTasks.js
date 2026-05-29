@@ -40,32 +40,50 @@ function CompletedTasks() {
   };
 
   return (
-    <section className="task-section" aria-labelledby="completed-heading">
-      <h2 id="completed-heading" className="section-title">
-        Completed tasks
-      </h2>
+    <div className="page page-completed">
+      <header className="page-hero page-hero-completed">
+        <div className="page-hero-content">
+          <p className="page-eyebrow">Achievements</p>
+          <h1>Completed tasks</h1>
+          <p className="page-lead">
+            Everything you&apos;ve finished lives here. Reopen a task if you need to revisit it.
+          </p>
+        </div>
+        <div className="stat-pill stat-pill-completed" aria-live="polite">
+          <span className="stat-value">{loading ? "—" : tasks.length}</span>
+          <span className="stat-label">done</span>
+        </div>
+      </header>
 
-      {loading ? (
-        <p className="empty-state">Loading tasks...</p>
-      ) : (
-        <>
-          {tasks.length > 0 && (
-            <p className="task-summary task-summary-done">
-              {tasks.length} completed {tasks.length === 1 ? "task" : "tasks"}
+      <div className="page-body">
+        {loading ? (
+          <div className="empty-state">
+            <span className="empty-icon" aria-hidden="true">✓</span>
+            <p>Loading your completed tasks...</p>
+          </div>
+        ) : tasks.length === 0 ? (
+          <div className="empty-state empty-state-success">
+            <span className="empty-icon" aria-hidden="true">◎</span>
+            <p>No completed tasks yet.</p>
+            <p className="empty-hint">
+              Finish something on your <Link to="/pending">pending</Link> board first.
             </p>
-          )}
-
-          <ul className="task-list">
+          </div>
+        ) : (
+          <ul className="task-grid" aria-label="Completed tasks">
             {tasks.map((task) => (
-              <li key={task._id} className="completed">
-                <span>{task.title}</span>
+              <li key={task._id} className="task-card task-card-completed">
+                <div className="task-card-body">
+                  <span className="task-check" aria-hidden="true">✓</span>
+                  <p className="task-title">{task.title}</p>
+                </div>
                 <div className="task-actions">
                   <button
                     type="button"
                     className="btn-status is-done"
                     onClick={() => reopenTask(task._id)}
                   >
-                    Mark pending
+                    Reopen
                   </button>
                   <button
                     type="button"
@@ -78,16 +96,9 @@ function CompletedTasks() {
               </li>
             ))}
           </ul>
-
-          {tasks.length === 0 && (
-            <p className="empty-state">
-              No completed tasks yet. Finish something on your{" "}
-              <Link to="/pending">pending</Link> list.
-            </p>
-          )}
-        </>
-      )}
-    </section>
+        )}
+      </div>
+    </div>
   );
 }
 

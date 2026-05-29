@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import api from "../api";
+import AuthBrandPanel from "../components/AuthBrandPanel";
 import { useAuth } from "../context/AuthContext";
 import "../Auth.css";
 
@@ -32,48 +33,60 @@ function Login() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <header className="auth-header">
-          <h1>QuickTask</h1>
-          <p>Sign in to manage your tasks</p>
-        </header>
+    <div className="auth-shell">
+      <AuthBrandPanel
+        title="Welcome back"
+        subtitle="Pick up where you left off and keep every task on track."
+      />
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          {error && <p className="auth-error" role="alert">{error}</p>}
+      <div className="auth-panel">
+        <div className="auth-panel-inner">
+          <header className="auth-panel-header">
+            <p className="auth-eyebrow">Sign in</p>
+            <h1>Log in to your workspace</h1>
+            <p>Enter your credentials to open your task boards.</p>
+          </header>
 
-          <label>
-            Email
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              required
-              autoComplete="email"
-            />
-          </label>
+          <form className="auth-form" onSubmit={handleSubmit}>
+            {error && (
+              <p className="auth-error" role="alert">
+                {error}
+              </p>
+            )}
 
-          <label>
-            Password
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Your password"
-              required
-              autoComplete="current-password"
-            />
-          </label>
+            <label>
+              Email address
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+                autoComplete="email"
+              />
+            </label>
 
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? "Signing in..." : "Sign in"}
-          </button>
-        </form>
+            <label>
+              Password
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Your password"
+                required
+                autoComplete="current-password"
+              />
+            </label>
 
-        <p className="auth-switch">
-          Don&apos;t have an account? <Link to="/signup">Sign up</Link>
-        </p>
+            <button type="submit" className="btn-primary" disabled={loading}>
+              {loading ? "Signing in..." : "Sign in"}
+            </button>
+          </form>
+
+          <p className="auth-switch">
+            New here? <Link to="/signup">Create an account</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

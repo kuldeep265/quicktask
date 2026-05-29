@@ -3,5 +3,7 @@ import App from "./App";
 
 test("redirects guests to login", async () => {
   render(<App />);
-  expect(await screen.findByRole("button", { name: /sign in/i })).toBeInTheDocument();
+  expect(
+    await screen.findByRole("heading", { name: /log in to your workspace/i })
+  ).toBeInTheDocument();
 });
