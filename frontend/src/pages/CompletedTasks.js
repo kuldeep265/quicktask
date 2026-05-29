@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
+import TasksByDate from "../components/TasksByDate";
 
 function CompletedTasks() {
   const [tasks, setTasks] = useState([]);
@@ -8,7 +9,7 @@ function CompletedTasks() {
 
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await api.get("/tasks", { params: { completed: "true" } });
+      const response = await api.get("/tasks", { params: { status: "completed" } });
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching completed tasks:", error);
@@ -46,7 +47,7 @@ function CompletedTasks() {
           <p className="page-eyebrow">Achievements</p>
           <h1>Completed tasks</h1>
           <p className="page-lead">
-            Everything you&apos;ve finished lives here. Reopen a task if you need to revisit it.
+            Finished work grouped by the date it was due. Reopen a task if you need to revisit it.
           </p>
         </div>
         <div className="stat-pill stat-pill-completed" aria-live="polite">
@@ -70,32 +71,12 @@ function CompletedTasks() {
             </p>
           </div>
         ) : (
-          <ul className="task-grid" aria-label="Completed tasks">
-            {tasks.map((task) => (
-              <li key={task._id} className="task-card task-card-completed">
-                <div className="task-card-body">
-                  <span className="task-check" aria-hidden="true">✓</span>
-                  <p className="task-title">{task.title}</p>
-                </div>
-                <div className="task-actions">
-                  <button
-                    type="button"
-                    className="btn-status is-done"
-                    onClick={() => reopenTask(task._id)}
-                  >
-                    Reopen
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-delete"
-                    onClick={() => deleteTask(task._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <TasksByDate
+            tasks={tasks}
+            variant="completed"
+            onReopen={reopenTask}
+            onDelete={deleteTask}
+          />
         )}
       </div>
     </div>

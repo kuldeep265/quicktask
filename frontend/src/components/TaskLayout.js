@@ -36,6 +36,15 @@ function TaskLayout() {
             Pending
           </NavLink>
           <NavLink
+            to="/overdue"
+            className={({ isActive }) =>
+              `sidebar-link ${isActive ? "active" : ""}`
+            }
+          >
+            <span className="nav-icon" aria-hidden="true">!</span>
+            Overdue
+          </NavLink>
+          <NavLink
             to="/completed"
             className={({ isActive }) =>
               `sidebar-link ${isActive ? "active" : ""}`
@@ -76,12 +85,20 @@ function TaskLayout() {
           Pending
         </NavLink>
         <NavLink
+          to="/overdue"
+          className={({ isActive }) =>
+            `mobile-nav-link ${isActive ? "active" : ""}`
+          }
+        >
+          Overdue
+        </NavLink>
+        <NavLink
           to="/completed"
           className={({ isActive }) =>
             `mobile-nav-link ${isActive ? "active" : ""}`
           }
         >
-          Completed
+          Done
         </NavLink>
       </nav>
     </div>

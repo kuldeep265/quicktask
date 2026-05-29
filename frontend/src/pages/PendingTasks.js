@@ -1,15 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../api";
+import TasksByDate from "../components/TasksByDate";
+import { todayInputValue } from "../utils/dateUtils";
 
 function PendingTasks() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
+  const [dueDate, setDueDate] = useState(() => todayInputValue());
   const [loading, setLoading] = useState(true);
 
   const fetchTasks = useCallback(async () => {
     try {
-      const response = await api.get("/tasks", { params: { completed: "false" } });
+      const response = await api.get("/tasks", { params: { status: "pending" } });
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching pending tasks:", error);
@@ -25,8 +28,9 @@ function PendingTasks() {
   const addTask = async () => {
     if (!title.trim()) return;
     try {
-      await api.post("/tasks/add", { title: title.trim() });
+      await api.post("/tasks/add", { title: title.trim(), dueDate });
       setTitle("");
+      setDueDate(todayInputValue());
       fetchTasks();
     } catch (error) {
       console.error("Error adding task:", error);
@@ -58,7 +62,7 @@ function PendingTasks() {
           <p className="page-eyebrow">Your inbox</p>
           <h1>Pending tasks</h1>
           <p className="page-lead">
-            Capture what needs doing next. Mark items done when you finish them.
+            Tasks are grouped by due date. Finish them on time so they don&apos;t move to Overdue.
           </p>
         </div>
         <div className="stat-pill stat-pill-pending" aria-live="polite">
@@ -72,7 +76,7 @@ function PendingTasks() {
           <label className="composer-label" htmlFor="new-task">
             Add a new task
           </label>
-          <div className="input-section">
+          <div className="composer-row">
             <input
               id="new-task"
               type="text"
@@ -81,6 +85,18 @@ function PendingTasks() {
               onChange={(e) => setTitle(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && addTask()}
             />
+          </div>
+          <div className="composer-meta">
+            <label className="due-date-field" htmlFor="task-due-date">
+              Complete by
+              <input
+                id="task-due-date"
+                type="date"
+                value={dueDate}
+                min={todayInputValue()}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+            </label>
             <button type="button" onClick={addTask} className="btn-add">
               Add task
             </button>
@@ -97,37 +113,17 @@ function PendingTasks() {
             <span className="empty-icon" aria-hidden="true">✦</span>
             <p>Nothing pending right now — you&apos;re all clear.</p>
             <p className="empty-hint">
-              Add a task above, or browse your{" "}
-              <Link to="/completed">completed</Link> work.
+              Add a task above, or check <Link to="/overdue">overdue</Link> and{" "}
+              <Link to="/completed">completed</Link> tasks.
             </p>
           </div>
         ) : (
-          <ul className="task-grid" aria-label="Pending tasks">
-            {tasks.map((task) => (
-              <li key={task._id} className="task-card task-card-pending">
-                <div className="task-card-body">
-                  <span className="task-dot" aria-hidden="true" />
-                  <p className="task-title">{task.title}</p>
-                </div>
-                <div className="task-actions">
-                  <button
-                    type="button"
-                    className="btn-status is-pending"
-                    onClick={() => completeTask(task._id)}
-                  >
-                    Mark done
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-delete"
-                    onClick={() => deleteTask(task._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <TasksByDate
+            tasks={tasks}
+            variant="pending"
+            onComplete={completeTask}
+            onDelete={deleteTask}
+          />
         )}
       </div>
     </div>

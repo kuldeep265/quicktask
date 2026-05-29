@@ -216,6 +216,16 @@
   border-bottom: 1px solid rgba(16, 185, 129, 0.2);
 }
 
+.page-hero-overdue {
+  background: linear-gradient(
+    135deg,
+    #fff1f2 0%,
+    #ffe4e6 45%,
+    #fecdd3 100%
+  );
+  border-bottom: 1px solid rgba(244, 63, 94, 0.25);
+}
+
 .page-eyebrow {
   margin: 0 0 8px;
   font-size: 0.8rem;
@@ -230,6 +240,10 @@
 
 .page-hero-completed .page-eyebrow {
   color: #047857;
+}
+
+.page-hero-overdue .page-eyebrow {
+  color: #be123c;
 }
 
 .page-hero h1 {
@@ -269,6 +283,11 @@
   border: 2px solid rgba(16, 185, 129, 0.35);
 }
 
+.stat-pill-overdue {
+  background: white;
+  border: 2px solid rgba(244, 63, 94, 0.35);
+}
+
 .stat-value {
   font-size: 2.5rem;
   font-weight: 800;
@@ -282,6 +301,10 @@
 
 .stat-pill-completed .stat-value {
   color: #059669;
+}
+
+.stat-pill-overdue .stat-value {
+  color: #e11d48;
 }
 
 .stat-label {
@@ -315,6 +338,148 @@
   font-size: 0.875rem;
   font-weight: 700;
   color: var(--slate-700);
+}
+
+.composer-row {
+  margin-bottom: 16px;
+}
+
+.composer-row input {
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  color: var(--slate-800);
+  background: var(--slate-50);
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.composer-row input:focus {
+  outline: none;
+  border-color: var(--indigo-500);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.composer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.due-date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--slate-700);
+}
+
+.due-date-field input[type="date"] {
+  padding: 12px 14px;
+  border: 2px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  color: var(--slate-800);
+  background: white;
+  min-width: 180px;
+}
+
+.due-date-field input[type="date"]:focus {
+  outline: none;
+  border-color: var(--indigo-500);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+.reschedule-bar {
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  border-radius: var(--radius-lg);
+}
+
+.reschedule-bar p {
+  margin: 0 0 14px;
+  font-weight: 600;
+  color: #9f1239;
+}
+
+.reschedule-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.reschedule-actions input[type="date"] {
+  padding: 12px 14px;
+  border: 2px solid #fecdd3;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+}
+
+.btn-ghost {
+  padding: 12px 18px;
+  background: transparent;
+  border: 2px solid var(--slate-200);
+  border-radius: var(--radius-md);
+  color: var(--slate-600);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-ghost:hover {
+  background: var(--slate-100);
+}
+
+.date-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.date-group-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--slate-200);
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--slate-900);
+}
+
+.date-group-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--slate-100);
+  font-size: 0.9rem;
+}
+
+.page-overdue .date-group-icon {
+  background: #ffe4e6;
+  color: #e11d48;
+}
+
+.date-group-count {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--slate-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .input-section {
@@ -401,6 +566,10 @@
   border-top: 4px solid var(--emerald-500);
 }
 
+.task-card-expired {
+  border-top: 4px solid #f43f5e;
+}
+
 .task-card-body {
   display: flex;
   align-items: flex-start;
@@ -415,6 +584,37 @@
   border-radius: 50%;
   background: var(--amber-500);
   box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+}
+
+.task-dot.is-overdue {
+  background: #f43f5e;
+  box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.25);
+}
+
+.task-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-due {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--slate-500);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.overdue-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ffe4e6;
+  color: #be123c;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .task-check {
@@ -487,6 +687,15 @@
 
 .btn-status.is-done:hover {
   background: #a7f3d0;
+}
+
+.btn-status.is-reschedule {
+  background: #ede9fe;
+  color: #5b21b6;
+}
+
+.btn-status.is-reschedule:hover {
+  background: #ddd6fe;
 }
 
 .btn-delete {
@@ -567,10 +776,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
+    padding: 10px 8px;
     border-radius: var(--radius-md);
     color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 700;
     text-decoration: none;
   }
@@ -578,6 +787,15 @@
   .mobile-nav-link.active {
     background: linear-gradient(135deg, var(--indigo-600), #7c3aed);
     color: white;
+  }
+
+  .composer-meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .composer-meta .btn-add {
+    width: 100%;
   }
 
   .page-hero {

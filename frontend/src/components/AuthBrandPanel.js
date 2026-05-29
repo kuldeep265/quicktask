@@ -11,7 +11,7 @@ function AuthBrandPanel({ title, subtitle }) {
         <ul className="auth-features">
           <li>
             <span className="feature-icon">◎</span>
-            Organize pending and completed work separately
+            Group tasks by due date — pending, overdue, and done
           </li>
           <li>
             <span className="feature-icon">◎</span>

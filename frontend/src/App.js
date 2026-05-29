@@ -5,6 +5,7 @@ import TaskLayout from "./components/TaskLayout";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import CompletedTasks from "./pages/CompletedTasks";
 import Login from "./pages/Login";
+import OverdueTasks from "./pages/OverdueTasks";
 import PendingTasks from "./pages/PendingTasks";
 import Signup from "./pages/Signup";
 
@@ -43,6 +44,7 @@ function AppRoutes() {
         }
       >
         <Route path="/pending" element={<PendingTasks />} />
+        <Route path="/overdue" element={<OverdueTasks />} />
         <Route path="/completed" element={<CompletedTasks />} />
       </Route>
       <Route path="/" element={<Navigate to="/pending" replace />} />
