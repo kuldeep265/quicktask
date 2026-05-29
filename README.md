@@ -1,6 +1,6 @@
 # QuickTask - MERN Stack To-Do Application
 
-A full-stack To-Do application built with MERN (MongoDB, Express, React, Node.js) with Docker containerization and Jenkins CI/CD pipeline.
+A full-stack To-Do application built with MERN (MongoDB, Express, React,1 Node.js) with Docker containerization and Jenkins CI/CD pipeline.
 
 ## Project Structure
 
