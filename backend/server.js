@@ -17,7 +17,10 @@ mongoose.connect(mongoUri)
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.error("MongoDB Connection Error:", err));
 
+const authRoutes = require("./routes/authRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+
+app.use("/auth", authRoutes);
 app.use("/tasks", taskRoutes);
 
 app.get("/", (req, res) => {
