@@ -34,7 +34,7 @@ quicktask/
 - ✅ View all tasks
 - ✅ Mark tasks as completed
 - ✅ Delete tasks
-- ✅ Responsive UI with modern design
+- ✅ Responsive UI with modern design1
 - ✅ Docker containerization
 - ✅ Jenkins CI/CD pipeline
 
