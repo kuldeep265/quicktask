@@ -1,111 +1,35 @@
 pipeline {
-
     agent any
 
-    environment {
-
-        FRONTEND_IMAGE = "kuldeep7860/quicktask-frontend"
-        BACKEND_IMAGE  = "kuldeep7860/quicktask-backend"
-
-    }
-
     stages {
-
         stage('Clone Repository') {
-
             steps {
-
                 git branch: 'main',
-                url: 'https://github.com/kuldeep265/quicktask.git'
-
+                    url: 'https://github.com/kuldeep265/quicktask.git'
             }
         }
 
-        stage('Build Frontend Docker Image') {
-
+        stage('Build and Deploy') {
             steps {
-
-                dir('frontend') {
-
-                    bat 'docker build -t %FRONTEND_IMAGE%:latest .'
-
-                }
+                bat 'docker compose down --remove-orphans || exit 0'
+                bat 'docker compose up -d --build'
             }
         }
 
-        stage('Build Backend Docker Image') {
-
+        stage('Verify Services') {
             steps {
-
-                dir('backend') {
-
-                    bat 'docker build -t %BACKEND_IMAGE%:latest .'
-
-                }
-            }
-        }
-
-        stage('Docker Hub Login') {
-
-              steps {
-
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USERNAME',
-                    passwordVariable: 'DOCKER_PASSWORD'
-                )]) {
-
-                    bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
-
-                }
-
-            }
-        }
-
-        stage('Push Frontend Docker Image') {
-
-            steps {
-
-                bat 'docker push %FRONTEND_IMAGE%:latest'
-
-            }
-        }
-
-        stage('Push Backend Docker Image') {
-
-            steps {
-
-                bat 'docker push %BACKEND_IMAGE%:latest'
-
-            }
-        }
-
-        stage('Deploy Application') {
-
-            steps {
-                  bat 'docker rm -f backend || exit 0'
-                 bat 'docker rm -f frontend || exit 0'
-                 bat 'docker rm -f mongodb || exit 0'
-                bat 'docker compose down'
-
-                bat 'docker compose up -d'
-
+                bat 'docker compose ps'
             }
         }
     }
 
     post {
-
         success {
-
-            echo 'CI/CD Pipeline Executed Successfully'
-
+            echo 'QuickTask deployed at http://localhost:3002'
         }
 
         failure {
-
-            echo 'Pipeline Failed'
-
+            echo 'Deployment failed'
         }
     }
 }
