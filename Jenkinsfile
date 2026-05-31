@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_REPO = 'kuldeep265'
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -9,16 +13,24 @@ pipeline {
             }
         }
 
-        stage('Build and Deploy') {
+        stage('Build and Push') {
             steps {
-                bat 'docker compose down --remove-orphans || exit 0'
-                bat 'docker compose up -d --build'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat 'docker compose build'
+                    bat 'docker compose push backend frontend'
+                }
             }
         }
 
-        stage('Verify Services') {
+        stage('Deploy') {
             steps {
-                bat 'docker compose ps'
+                bat 'docker compose down --remove-orphans || exit 0'
+                bat 'docker compose up -d'
             }
         }
     }

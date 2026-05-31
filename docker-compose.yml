@@ -1,42 +1,24 @@
 services:
   mongodb:
     image: mongo:7
-    container_name: quicktask-mongodb
     restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 20s
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: quicktask-backend
+    build: ./backend
+    image: kuldeep265/quicktask-backend:latest
     restart: unless-stopped
     ports:
       - "5002:5000"
-    environment:
-      MONGODB_URI: mongodb://mongodb:27017/quicktask
-      JWT_SECRET: ${JWT_SECRET:-quicktask-dev-secret}
-      NODE_ENV: production
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5002}
-    container_name: quicktask-frontend
+    build: ./frontend
+    image: kuldeep265/quicktask-frontend:latest
     restart: unless-stopped
     ports:
       - "3002:80"
