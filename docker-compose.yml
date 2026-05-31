@@ -18,6 +18,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: kuldeep7860/quicktask-backend:latest
     container_name: quicktask-backend
     restart: unless-stopped
     ports:
@@ -36,6 +37,7 @@ services:
       dockerfile: Dockerfile
       args:
         REACT_APP_API_URL: ${REACT_APP_API_URL:-http://localhost:5002}
+    image: kuldeep7860/quicktask-frontend:latest
     container_name: quicktask-frontend
     restart: unless-stopped
     ports:
