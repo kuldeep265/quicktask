@@ -44,7 +44,7 @@ quicktask/
 - MongoDB Compass
 - Docker Desktop
 - Git
-- Visual Studio Code
+- Visual Studio Code1
 - Jenkins
 
 ## Local Development
