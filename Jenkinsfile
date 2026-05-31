@@ -25,7 +25,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat 'docker compose down --remove-orphans || exit 0'
+                bat 'docker compose down '
                 bat 'docker compose up -d'
             }
         }
